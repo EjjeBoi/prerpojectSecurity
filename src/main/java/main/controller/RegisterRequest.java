@@ -24,32 +24,26 @@ public class RegisterRequest {
 
     private Role role;
 
-    // Геттер для firstname
     public String getFirstname() {
         return firstname;
     }
 
-    // Геттер для lastname
     public String getLastname() {
         return lastname;
     }
 
-    // Геттер для email
     public String getEmail() {
         return email;
     }
 
-    // Геттер для userName
     public String getUserName() {
         return username;
     }
 
-    // Геттер для password
     public String getPassword() {
         return password;
     }
 
-    // Геттер для role
     public Role getRole() {
         return role;
     }

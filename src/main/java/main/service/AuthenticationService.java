@@ -5,7 +5,6 @@ import main.config.JwtService;
 import main.controller.AuthenticationRequest;
 import main.controller.AuthenticationResponse;
 import main.controller.RegisterRequest;
-//import main.dto.UserPostDto;
 import main.models.Role;
 import main.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,14 +28,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .email(request.getEmail())
-                .username(request.getUserName())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
-                .build();
+        var user = User.builder().firstname(request.getFirstname()).lastname(request.getLastname()).email(request.getEmail()).username(request.getUserName()).password(passwordEncoder.encode(request.getPassword())).role(Role.USER).build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         logger.info("Пользователь успешно зарегистрирован: {}", request.getUserName());
@@ -44,14 +36,8 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
-        var user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow();
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        var user = userRepository.findByUsername(request.getUsername()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         logger.info("Пользователь успешно аутентифицирован: {}", request.getUsername());
         return AuthenticationResponse.builder().token(jwtToken).build();

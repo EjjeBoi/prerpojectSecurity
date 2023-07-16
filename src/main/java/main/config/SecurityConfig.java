@@ -53,30 +53,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-//    @Autowired
-//    private UserService userService;
-//
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/user-api/all").permitAll() // Разрешить доступ к URL без аутентификации
-//                .antMatchers("/user-api/add").hasRole("ADMIN") // Требуется роль ADMIN для доступа к URL
-//                .antMatchers("/user-api/delete").hasRole("ADMIN")
-//                .antMatchers("/user-api/update/**").hasRole("ADMIN")
-//                .anyRequest().authenticated() // Все остальные URL требуют аутентификации
-//                .and()
-//                .httpBasic(); // Использовать базовую аутентификацию
-//    }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-//    }
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
 }

@@ -84,14 +84,6 @@ public class UserService implements UserDetailsService {
         return List.of(new SimpleGrantedAuthority(role.getAuthority()));
     }
 
-    //    public User updateUserById(Integer id, UserPostDto dto) {
-//        User user = userRepository.getById(id);
-//        user.setFirstName(dto.getFirstName());
-//        user.setLastName(dto.getLastName());
-//        user.setEmail(dto.getEmail());
-//        user.setUserName(dto.getUserName());
-//        return userRepository.save(user);
-//    }
 //    @Override
 //    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 //        User user = userRepository.getByUserName(userName);

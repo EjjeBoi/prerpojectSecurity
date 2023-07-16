@@ -52,10 +52,4 @@ public class AdminController {
         userService.deleteUserById(userId);
         return ResponseEntity.ok("User deleted successfully");
     }
-
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @PutMapping("update/{id}")
-//    public User updateUserById(@PathVariable Integer id, @RequestBody UserPostDto dto) {
-//        return userService.updateUserById(id, dto);
-//    }
 }

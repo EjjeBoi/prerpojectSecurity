@@ -1,7 +1,6 @@
 package main.controller;
 
 import lombok.RequiredArgsConstructor;
-//import main.dto.UserPostDto;
 import main.models.Role;
 import main.models.User;
 import main.service.AuthenticationService;
@@ -18,7 +17,6 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-//    private final RegisterRequest registerRequest;
     private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
@@ -33,7 +31,6 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-//    @PreAuthorize("hasRole('USER')")
     @PostMapping("grant-admin-role/{id}")
     public void grantAdminRole(@PathVariable("id") Long Id) {
         User user = userService.getById(Id);
