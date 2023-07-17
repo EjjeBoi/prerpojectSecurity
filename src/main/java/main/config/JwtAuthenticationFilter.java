@@ -1,6 +1,8 @@
 package main.config;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,9 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Component
 @RequiredArgsConstructor
@@ -39,11 +37,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         logger.info("Заголовок Authorization: {}", authHeader);
         final String jwt;
         final String username;
-//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-//            logger.info("Токен отсутствует или имеет неправильный формат: {}", authHeader);
-//            filterChain.doFilter(request, response);
-//            return;
-//        }
         if (authHeader == null) {
             logger.info("Отсутствует заголовок Authorization");
             filterChain.doFilter(request, response);
@@ -60,12 +53,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         logger.info("Извлечено имя пользователя из токена: {}", username);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-                logger.info("Пользователь не аутентифицирован {}", SecurityContextHolder.getContext().getAuthentication());
-                filterChain.doFilter(request, response);
-                return;
-            }
+            logger.info("Инфо искомого пользователя в БД {}", userDetails);
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());

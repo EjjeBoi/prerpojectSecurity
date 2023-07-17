@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-@RequestMapping("/admin-api/")
+@RequestMapping("/admin/")
 public class AdminController {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
@@ -24,13 +24,14 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("all")
     public List<User> getAllUsers() {
+        logger.info("Processing request to /admin-api/all");
         logger.info("Admin requested all users.");
         return userService.getAllUsers();
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("get-by-username/{userName}")
-    public User getByUserName(@PathVariable("userName") String userName) {
+    @GetMapping("get-by-username/{username}")
+    public User getByUserName(@PathVariable("username") String userName) {
         return userService.findByUserName(userName);
     }
 

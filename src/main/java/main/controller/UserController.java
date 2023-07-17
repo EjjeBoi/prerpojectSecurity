@@ -1,15 +1,13 @@
 package main.controller;
 
 import lombok.RequiredArgsConstructor;
+import main.config.JwtService;
 import main.models.Role;
 import main.models.User;
 import main.service.AuthenticationService;
 import main.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/user-api/")
@@ -32,9 +30,12 @@ public class UserController {
     }
 
     @PostMapping("grant-admin-role/{id}")
-    public void grantAdminRole(@PathVariable("id") Long Id) {
+    public ResponseEntity<String> grantAdminRole(@PathVariable("id") Long Id) {
         User user = userService.getById(Id);
         user.setRole(Role.ADMIN);
         userService.updateUser(user);
+        JwtService jwtService = new JwtService();
+        String updatedToken = jwtService.generateToken(user);
+        return ResponseEntity.ok(updatedToken); //Обновленный токен с ролью ADMIN
     }
 }
