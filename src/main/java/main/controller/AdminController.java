@@ -41,11 +41,11 @@ public class AdminController {
         return userService.getById(id);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("delete")
-    public void deleteUsers() {
-        userService.deleteAll();
-    }
+//    @PreAuthorize("hasRole('USER')")
+//    @DeleteMapping("delete")
+//    public void deleteUsers() {
+//        userService.deleteAll();
+//    }
 
     @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/delete_user_account/{userId}")

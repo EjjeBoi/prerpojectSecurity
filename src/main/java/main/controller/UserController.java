@@ -7,6 +7,7 @@ import main.models.User;
 import main.service.AuthenticationService;
 import main.service.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,7 +29,11 @@ public class UserController {
         AuthenticationResponse response = authenticationService.authenticate(request);
         return ResponseEntity.ok(response);
     }
-
+    @PreAuthorize("hasRole('USER')")
+    @DeleteMapping("delete")
+    public void deleteUsers() {
+        userService.deleteAll();
+    }
     @PostMapping("grant-admin-role/{id}")
     public ResponseEntity<String> grantAdminRole(@PathVariable("id") Long Id) {
         User user = userService.getById(Id);

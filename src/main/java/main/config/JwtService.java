@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class JwtService {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
-    private static final String SECRET_KEY = "32B5009FB35734D4DFDE016E792B8ACDB1743D32F296E743046AD81E33340531";
+    private static String SECRET_KEY = "32B5009FB35734D4DFDE016E792B8ACDB1743D32F296E743046AD81E33340531";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -75,7 +75,9 @@ public class JwtService {
 
         return claims;
     }
-
+    public void setSecretKey(String secretKey) {
+        this.SECRET_KEY = secretKey;
+    }
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
